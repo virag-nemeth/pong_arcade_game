@@ -13,7 +13,7 @@ r_paddle = Paddle(position=(350,0))
 l_paddle = Paddle(position=(-350,0))
 
 ball = Ball()
-direction = (45)
+
 
 screen.listen()
 screen.onkey(r_paddle.go_up,"Up")
@@ -27,5 +27,19 @@ while game_is_on:
     time.sleep(0.1)
     screen.update()
     ball.move()
+    
+    # Check for collision with the top wall
+    if ball.ycor() > 290:  # Assuming window height is 600
+        ball.sety(290)  # Reset position to the edge of the wall
+        ball.setheading(ball.heading() + 90)
+        ball.move()
+
+    # Check for collision with the bottom wall
+    if ball.ycor() < -290:  # Assuming window bottom is at -290
+        ball.sety(-290)  # Reset position to the edge of the wall
+        ball.setheading(ball.heading() + 90)
+        ball.move()
+        
+    screen.update()
 
 screen.exitonclick()
