@@ -28,18 +28,15 @@ while game_is_on:
     screen.update()
     ball.move()
     
-    # Check for collision with the top wall
-    if ball.ycor() > 290:  # Assuming window height is 600
-        ball.sety(290)  # Reset position to the edge of the wall
-        ball.setheading(ball.heading() + 90)
-        ball.move()
-
-    # Check for collision with the bottom wall
-    if ball.ycor() < -290:  # Assuming window bottom is at -290
-        ball.sety(-290)  # Reset position to the edge of the wall
-        ball.setheading(ball.heading() + 90)
-        ball.move()
+    # Detect for collision with the top or bottom wall
+    if ball.ycor() > 280 or ball.ycor() < - 280:  # Assuming window height is 600
+        ball.bounce_y()
         
-    screen.update()
+    # Detect collision with paddle
+    if (ball.distance(r_paddle) < 50 and ball.xcor() > 320
+        or ball.distance(l_paddle) < 50 and ball.xcor() > -320):
+        ball.bounce_x()
+
+
 
 screen.exitonclick()
